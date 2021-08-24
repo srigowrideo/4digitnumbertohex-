@@ -1,0 +1,36 @@
+DATA SEGMENT
+BCD DW 1111H
+HEX DW 0 
+DATA ENDS
+CODE SEGMENT
+ASSUME CS: CODE ,DS :DATA 
+START : MOV AX,DATA ;
+        MOV DS,AX; 
+        MOV AX,BCD ;
+        MOV DX,AX;
+        MOV BL,AL ;
+        AND BL, 0 FH ; 
+        AND AL,0F0H;
+        MOV CL,04;
+        ROR AL,CL;
+        MOV BH, 10;
+        MUL BH ;    
+        ADD AL,BL; 
+        MOV HEX,AX; 
+        MOV AL,DH; 
+        AND AL,0FH; 
+        MOV BH,100;
+        MUL BH; 
+        ADD HEX,AX;
+        MOV AL,DH; 
+        ADD AL,0F0H;
+        MOV CL,04; 
+        ROR AL,CL; 
+        MOV AH,00; 
+        MOV BX,1000;
+        MUL BX; 
+        ADD HEX ,AX; 
+        MOV AH,4CH ; 
+        INT 21H ; 
+CODE ENDS 
+END START 
